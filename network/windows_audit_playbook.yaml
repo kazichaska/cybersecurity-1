@@ -1,0 +1,58 @@
+---
+- name: Windows Security Audit Playbook
+  hosts: windows_servers
+  gather_facts: no
+  vars:
+    report_path: "C:\AuditReport"
+
+  tasks:
+    - name: Ensure report directory exists
+      win_file:
+        path: "{{ report_path }}"
+        state: directory
+
+    - name: Review User Permissions
+      win_shell: |
+        Get-LocalGroupMember -Group "Administrators" | Select-Object Name, PrincipalSource | Out-File -FilePath {{ report_path }}\user_permissions.txt
+      register: user_permissions
+
+    - name: Explore Malware Hiding Spots - Windows Temp
+      win_shell: |
+        Get-ChildItem -Path "C:\Windows\Temp" -Force | Select-Object Name, CreationTime, Length, Attributes | Out-File -FilePath {{ report_path }}\temp_files.txt
+
+    - name: Explore Malware Hiding Spots - Tasks Folder
+      win_shell: |
+        Get-ChildItem -Path "C:\Windows\Tasks" -Force | Select-Object Name, CreationTime, Length, Attributes | Out-File -FilePath {{ report_path }}\tasks_files.txt
+
+    - name: Explore Malware Hiding Spots - AppData (Current User)
+      win_shell: |
+        $users = Get-ChildItem -Path C:\Users -Directory
+        foreach ($user in $users) {
+          $appDataPath = "$($user.FullName)\AppData"
+          if (Test-Path $appDataPath) {
+            Get-ChildItem -Path $appDataPath -Recurse -Force | Select-Object FullName, CreationTime, Length, Attributes | Out-File -Append -FilePath {{ report_path }}\appdata_files.txt
+          }
+        }
+
+    - name: Investigate Processes
+      win_shell: |
+        Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, CPU, ID | Out-File -FilePath {{ report_path }}\top_processes.txt
+
+    - name: Analyze Windows Services
+      win_shell: |
+        Get-Service | Where-Object { $_.Status -eq "Running" } | Select-Object Name, DisplayName, Status, StartType | Out-File -FilePath {{ report_path }}\running_services.txt
+
+    - name: Compile Report
+      win_shell: |
+        $reportFiles = Get-ChildItem -Path {{ report_path }} -Filter "*.txt"
+        $finalReport = "{{ report_path }}\Final_Audit_Report.txt"
+        foreach ($file in $reportFiles) {
+          Add-Content -Path $finalReport -Value (Get-Content -Path $file)
+          Add-Content -Path $finalReport -Value "`n`n"
+        }
+
+    - name: Fetch Final Report to Control Machine
+      fetch:
+        src: "{{ report_path }}\Final_Audit_Report.txt"
+        dest: "./audit_reports/{{ inventory_hostname }}_Final_Audit_Report.txt"
+        flat: yes
