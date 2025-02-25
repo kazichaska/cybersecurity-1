@@ -107,8 +107,6 @@ Now, we analyze what websites and services they accessed.
 ----------------------------------------------------------------------------------------
 
 
-Let's break this down step by step so you can properly analyze the SYN scan and understand the results.
-
 ### **Step 1: Open the Packet Capture in Wireshark**
 1. Open **Wireshark** and load the `synscan.pcapng` or `synscandemo.pcapng` file.
 2. Start by applying a filter for **SYN packets**:

@@ -1,0 +1,53 @@
+services:
+  firewalld:
+    container_name: firewalld
+    image: cyberxsecurity/ufw-firewalld:latest
+    # volumes:
+    #   - ./:/files
+    ports:
+      - "8000"
+      - "8080"
+      - "3389"
+      - "5901"
+      - "22"
+      - "80"
+      - "443"
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - ALL
+    networks:
+      network_security_net:
+        ipv4_address: 172.16.18.70
+
+  ufw:
+    container_name: ufw
+    image: cyberxsecurity/ufw-firewalld:latest
+    # volumes:
+    #   - ./:/files
+    ports:
+      - "8000"
+      - "8080"
+      - "3389"
+      - "5901"
+      - "22"
+      - "80"
+      - "443"
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - ALL
+    networks:
+      network_security_net:
+        ipv4_address: 172.16.18.72
+
+networks:
+  network_security_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.18.0/23"
+
+volumes:
+  firewalld:
+  ufw:

@@ -334,3 +334,5 @@ Sender MAC address: ip-192-168-47-200.ec2.internal (00:0c:29:1d:b3:b1)
 
 Correct, they are creating a spoof record to direct the traffic intended for 192.168.47.200 over to their device.
 ```
+
+ns-1119.awsdns-11.org

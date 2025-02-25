@@ -15,3 +15,26 @@ jimi
 hendrix
 ```
 
+Module-12 (NSM, IDS/IPS and security onion)
+
+```
+Username: sysadmin
+
+Password: cybersecurity
+
+UFW (Docker Container)
+
+Username: sysadmin
+Password: cybersecurity
+firewalld (Docker Container)
+
+Username: sysadmin
+Password: cybersecurity
+```
+
+```
+NetSec lab environment. 
+Here is the Security Onion Username and Password for sudo access:
+Username: sysadmin
+Password: cybersecurity
+```

@@ -1,0 +1,17 @@
+# Use a base image with a minimal Linux distribution
+FROM ubuntu:latest
+
+# Install necessary packages
+RUN apt-get update && \
+    apt-get install -y ufw firewalld iproute2 iputils-ping && \
+    apt-get clean
+
+# Enable UFW and firewalld services
+RUN ufw enable && \
+    systemctl enable firewalld
+
+# Expose necessary ports
+EXPOSE 8000 8080 3389 5901 22 80 443
+
+# Set the entrypoint to bash for interactive use
+ENTRYPOINT ["/bin/bash"]
