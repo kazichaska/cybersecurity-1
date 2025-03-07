@@ -72,6 +72,20 @@ OpenSSL is a powerful tool for implementing encryption and secure communication.
 
 ### Encrypt a Message
 
+- **create key and IV
+`openssl enc -pbkdf2 -nosalt -aes-256-cbc -k secretpass -P > key_and_iv`
+
+```
+root@ip-10-0-1-231:/home/sysadmin/cryptography/activity# cat key_and_iv 
+key=6B6053A7D8C7499B4825CC60209177489A82473B636AE0804D9263038563D778
+iv =B785E5C6BE76EA3C590D02A6C8254D21
+root@ip-10-0-1-231:/home/sysadmin/cryptography/activity# openssl enc -pbkdf2 -nosalt -aes-256-cbc -in meeting.txt -out meeting.txt.enc -base64 -K 6B6053A7D8C7499B4825CC60209177489A82473B636AE0804D9263038563D778 -iv B785E5C6BE76EA3C590D02A6C8254D21
+
+
+openssl enc -pbkdf2 -nosalt -aes-256-cbc -d -in meeting.txt.enc  -base64 -K 6B6053A7D8C7499B4825CC60209177489A82473B636AE0804D9263038563D778 -iv B785E5C6BE76EA3C590D02A6C8254D21
+```
+
+
 - **Command**:
   ```bash
   openssl enc -aes-256-cbc -salt -in plaintext.txt -out encrypted.txt -k mysecretkey

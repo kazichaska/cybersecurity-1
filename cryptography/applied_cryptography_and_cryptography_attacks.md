@@ -33,6 +33,13 @@ GPG (GNU Privacy Guard) is a tool for secure communication that uses asymmetric 
   ```bash
   gpg --gen-key
   ```
+
+  ```
+  gpg --armor --output john.gpg --export john@email.com
+  gpg --import john.gpg
+  gpg --armor --output secret.txt.enc --encrypt --recipient john@email.com secret.txt 
+  gpg --output secret_decrypted_message --decrypt secret.txt.enc
+  ```
 - **Explanation**: This command generates a new GPG key pair (public and private).
 
 ### Encrypt a Message
@@ -271,6 +278,11 @@ Hashcat is a powerful password recovery tool that uses various attack methods to
   hashcat -m 0 -a 0 -o solved.txt hash.txt /usr/share/wordlists/rockyou.txt --force
   hashcat -m 0 -a 3 -o cracked.txt hashes.txt ?a?a?a?a?a?a
   ```
+
+  ** from class **
+  ```
+  hashcat -m 0 -a 0 -o cracked.txt tannen.txt /usr/share/wordlists/rockyou.txt --force
+  ```
   - **Explanation**: This command uses Hashcat to perform a brute-force attack on the hashes in `hashes.txt` with a mask of six characters (any character).
 
 - **Dictionary Attack**:
@@ -303,6 +315,19 @@ By understanding and applying these cryptographic techniques and attack methods,
 Encryption is the process of converting plaintext into ciphertext to protect the data from unauthorized access. Decryption is the process of converting ciphertext back into plaintext.
 
 ### Example Using OpenSSL
+
+
+- **create key and IV
+`openssl enc -pbkdf2 -nosalt -aes-256-cbc -k secretpass -P > key_and_iv`
+
+```
+root@ip-10-0-1-231:/home/sysadmin/cryptography/activity# cat key_and_iv 
+key=6B6053A7D8C7499B4825CC60209177489A82473B636AE0804D9263038563D778
+iv =B785E5C6BE76EA3C590D02A6C8254D21
+root@ip-10-0-1-231:/home/sysadmin/cryptography/activity# openssl enc -pbkdf2 -nosalt -aes-256-cbc -in meeting.txt -out meeting.txt.enc -base64 -K 6B6053A7D8C7499B4825CC60209177489A82473B636AE0804D9263038563D778 -iv B785E5C6BE76EA3C590D02A6C8254D21
+
+openssl enc -pbkdf2 -nosalt -aes-256-cbc -d -in meeting.txt.enc  -base64 -K 6B6053A7D8C7499B4825CC60209177489A82473B636AE0804D9263038563D778 -iv B785E5C6BE76EA3C590D02A6C8254D21
+```
 
 - **Encrypt**:
   ```bash
