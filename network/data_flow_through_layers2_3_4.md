@@ -64,6 +64,44 @@ In this lesson, we will cover the following concepts:
   nmap -sS 192.168.1.1
   ```
 
+
+```
+nmap -Pn 184.73.212.55
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-03-13 21:14 CDT
+Warning: File ./nmap-services exists, but Nmap is using /opt/homebrew/bin/../share/nmap/nmap-services for security and consistency reasons.  set NMAPDIR=. to give priority to files in your local directory (may affect the other data files too).
+Nmap scan report for ec2-184-73-212-55.compute-1.amazonaws.com (184.73.212.55)
+Host is up (0.052s latency).
+Not shown: 998 filtered tcp ports (no-response)
+PORT     STATE SERVICE
+22/tcp   open  ssh
+3389/tcp open  ms-wbt-server
+
+Nmap done: 1 IP address (1 host up) scanned in 49.14 seconds
+
+
+nmap -Pn 13.236.118.229
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-03-13 21:16 CDT
+Warning: File ./nmap-services exists, but Nmap is using /opt/homebrew/bin/../share/nmap/nmap-services for security and consistency reasons.  set NMAPDIR=. to give priority to files in your local directory (may affect the other data files too).
+Nmap scan report for ec2-13-236-118-229.ap-southeast-2.compute.amazonaws.com (13.236.118.229)
+Host is up (0.20s latency).
+Not shown: 990 filtered tcp ports (no-response)
+PORT     STATE  SERVICE
+22/tcp   open   ssh
+80/tcp   open   http
+443/tcp  closed https
+3389/tcp open   ms-wbt-server
+5900/tcp closed vnc
+5901/tcp closed vnc-1
+5902/tcp closed vnc-2
+5903/tcp closed vnc-3
+5904/tcp closed ag-swim
+8080/tcp closed http-proxy
+
+Nmap done: 1 IP address (1 host up) scanned in 98.37 seconds
+
+
+```
+
 ## Conclusion
 
 Understanding these concepts is crucial for network and security professionals to effectively manage and secure network communications. Tools like Wireshark can provide valuable insights into network traffic and help diagnose issues at various layers of the OSI model.
