@@ -105,7 +105,7 @@ Congratulations on completing Module 15 of the Cybersecurity Boot Camp! This mod
 
 ---
 
-### 11. Perform Basic Privilege alEscation Tasks
+### 11. Perform Basic Privilege Escalation Tasks
 - **Windows Example**:
   ```plaintext
   systeminfo
@@ -185,3 +185,4 @@ Congratulations on completing Module 15 of the Cybersecurity Boot Camp! This mod
 
 ---
 
+```

